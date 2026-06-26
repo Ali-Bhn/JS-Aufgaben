@@ -37,6 +37,9 @@ section{
     border-radius: 8px;
     background:white;
     color:black;
+    padding: 0.5rem 1rem;
+    transition: .3s;
+    
 
 }
 #searchButton:hover{
