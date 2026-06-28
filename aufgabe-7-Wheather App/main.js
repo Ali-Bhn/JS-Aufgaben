@@ -1,11 +1,23 @@
 const wetterDaten = document.querySelector("#weatherContainer");
 
-const url = "...latitude=52.52...";
-async function ladeWetter() {
-   const response = await fetch(url);
-   const data = await response.json();
-   const current = data.current;
-   renderWetter(current);
+// const url = "...latitude=52.52...";
+async function ladeWetter(cityName) {
+    const geocodingUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${cityName}&count=10&language=de&format=json`;
+    const responseLocation = await fetch(geocodingUrl);
+    const dataLocation = await responseLocation.json();
+    const location = dataLocation.results[0];
+
+    
+    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m`;
+    const responseWetter = await fetch(weatherUrl);
+    const dataWetter = await responseWetter.json();
+    console.log(dataWetter)
+    const current = dataWetter.current
+    console.log(location);
+    console.log(location.name);
+    console.log(location.latitude);
+    console.log(location.longitude);
+    renderWetter(current);
 
 }
 function renderWetter(current){
@@ -21,5 +33,5 @@ function renderWetter(current){
     wetterDaten.appendChild(windElement);
 
 }
-ladeWetter();
+ladeWetter("berlin");
 
