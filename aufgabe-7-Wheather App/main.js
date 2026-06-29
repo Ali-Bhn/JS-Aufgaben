@@ -35,15 +35,9 @@ async function ladeWetter(cityName) {
 }
 function renderWetter(current){
     wetterDaten.innerHTML = "";
-    const temperatureElement = document.createElement("p");
-    const humidityElement = document.createElement("p");
-    const windElement = document.createElement("p");
-    temperatureElement.textContent = `Temperatur: ${current.temperature_2m} °C`;
-    humidityElement.textContent = `Luftfeuchtigkeit: ${current.relative_humidity_2m} %`;
-    windElement.textContent = `Wind: ${current.wind_speed_10m} km/h`;
-    wetterDaten.appendChild(temperatureElement);
-    wetterDaten.appendChild(humidityElement);
-    wetterDaten.appendChild(windElement);
+    renderWetterZeile(`Temperatur: ${current.temperature_2m} °C`)
+    renderWetterZeile(`Luftfeuchtigkeit: ${current.relative_humidity_2m} %`);
+    renderWetterZeile(`Wind: ${current.wind_speed_10m} km/h`);
 
 }
 
@@ -52,5 +46,12 @@ function renderError (message){
     const messageText = document.createElement("p");
     messageText.textContent = message;
     wetterDaten.appendChild(messageText);
+
+}
+
+function renderWetterZeile (text){
+    const pElement = document.createElement("p");
+    pElement.textContent = text;
+    wetterDaten.appendChild(pElement);
 
 }
