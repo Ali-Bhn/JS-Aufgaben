@@ -5,11 +5,19 @@ searchButton.addEventListener("click", () => {
     const cityName = cityInput.value.trim();
     ladeWetter(cityName);
 })
+
+cityInput.addEventListener("keydown", (event) => {
+    const cityName = cityInput.value("Enter");
+    ladeWetter(cityName);
+
+})
 async function ladeWetter(cityName) {
     if(cityName === ""){
         renderError("Bitte gib eine Stadt ein");
         return;
     }
+    searchButton.disabled = true;
+    renderLoading();
     try {
         const geocodingUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${cityName}&count=10&language=de&format=json`;
         const responseLocation = await fetch(geocodingUrl);
@@ -23,11 +31,16 @@ async function ladeWetter(cityName) {
         const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m`;
         const responseWetter = await fetch(weatherUrl);
         const dataWetter = await responseWetter.json();
-        const current = dataWetter.current
+        const current = dataWetter.current;
+
         renderWetter(current);
     }
     catch(error){
+        console.error(error);
         renderError("Es ist ein Netzwerkfehler aufgetreten. Bitte versuche es später erneut.");
+    }
+    finally{
+        searchButton.disabled = false;
     }
     
 
@@ -55,4 +68,9 @@ function renderWetterZeile (text){
     wetterDaten.appendChild(pElement);
 
 }
-
+function renderLoading(){
+    wetterDaten.innerHTML = "";
+    const loadingText = document.createElement("p");
+    loadingText.textContent = "Wetter wird geladen...";
+    wetterDaten.appendChild(loadingText);
+}
