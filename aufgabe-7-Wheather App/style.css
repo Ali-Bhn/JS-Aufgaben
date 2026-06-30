@@ -1,3 +1,8 @@
+
+* {
+    box-sizing: border-box;
+}
+
 body{
     display: flex;
     justify-content: center;
@@ -15,9 +20,13 @@ h1{
     text-align: center;
 
 }
-section{
+main {
     width: 100%;
-    max-width: 420px;
+    display: flex;
+    justify-content: center;
+}
+section{
+    width:min(420px, 90%);
     color: white;
     
     padding: 2rem;
@@ -29,7 +38,10 @@ section{
 .search-container{
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 1rem;
+
 }
 
 #searchButton{
@@ -51,8 +63,30 @@ section{
 
 }
 #cityInput{
-    flex: 1;
+    width: min(240px, 100%);
     padding: 0.5rem;
     border-radius: 8px;
     border: none;
+}
+.weather-card{
+    width: 100%;
+    max-width: 320px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 1.5rem auto 0;
+    border-radius: 1.5rem;
+    gap : .75rem;
+    color: #f8fafc;
+    background:
+        radial-gradient(circle at top left, rgba(25, 146, 146, 0.25), transparent 8rem),
+        linear-gradient(135deg, #254e83 0%, #061f3b 48%, #0b1d33 100%);
+
+    box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    
+}
+.weather-card p {
+
 }

@@ -49,8 +49,8 @@ function renderWetter(current, location){
     wetterDaten.innerHTML = "";
     const wetterContainer = document.createElement("div");
     wetterContainer.classList.add("weather-card");
-    renderWetterZeile(`Stadt: ${location.name}`, wetterContainer);
-    renderWetterZeile(`Temperatur: ${Math.round(current.temperature_2m)} °C`, wetterContainer);
+    renderWetterZeile(`📍Stadt: ${location.name}`, wetterContainer);
+    renderWetterZeile(`🌡️Temperatur: ${Math.round(current.temperature_2m)} °C`, wetterContainer);
     renderWetterZeile(`Luftfeuchtigkeit: ${current.relative_humidity_2m} %`, wetterContainer);
     renderWetterZeile(`Wind: ${current.wind_speed_10m} km/h`, wetterContainer);
     wetterDaten.appendChild(wetterContainer);
