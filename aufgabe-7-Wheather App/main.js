@@ -1,16 +1,17 @@
 const wetterDaten = document.querySelector("#weatherContainer");
 const cityInput = document.querySelector("#cityInput");
 const searchButton = document.querySelector("#searchButton");
+
 searchButton.addEventListener("click", () => {
-    const cityName = cityInput.value.trim();
-    ladeWetter(cityName);
-})
+    starteSuche();
+});
 
 cityInput.addEventListener("keydown", (event) => {
-    const cityName = cityInput.value("Enter");
-    ladeWetter(cityName);
+    if (event.key === "Enter"){
+        starteSuche();
+    }
+});
 
-})
 async function ladeWetter(cityName) {
     if(cityName === ""){
         renderError("Bitte gib eine Stadt ein");
@@ -32,8 +33,7 @@ async function ladeWetter(cityName) {
         const responseWetter = await fetch(weatherUrl);
         const dataWetter = await responseWetter.json();
         const current = dataWetter.current;
-
-        renderWetter(current);
+        renderWetter(current, location);
     }
     catch(error){
         console.error(error);
@@ -43,12 +43,12 @@ async function ladeWetter(cityName) {
         searchButton.disabled = false;
     }
     
-
-
 }
-function renderWetter(current){
+
+function renderWetter(current, location){
     wetterDaten.innerHTML = "";
-    renderWetterZeile(`Temperatur: ${current.temperature_2m} °C`)
+    renderWetterZeile(`Stadt: ${location.name}`);
+    renderWetterZeile(`Temperatur: ${Math.round(current.temperature_2m)} °C`);
     renderWetterZeile(`Luftfeuchtigkeit: ${current.relative_humidity_2m} %`);
     renderWetterZeile(`Wind: ${current.wind_speed_10m} km/h`);
 
@@ -68,9 +68,16 @@ function renderWetterZeile (text){
     wetterDaten.appendChild(pElement);
 
 }
+
 function renderLoading(){
     wetterDaten.innerHTML = "";
     const loadingText = document.createElement("p");
     loadingText.textContent = "Wetter wird geladen...";
     wetterDaten.appendChild(loadingText);
+}
+
+function starteSuche (){
+    const cityName = cityInput.value.trim();
+    ladeWetter(cityName);
+
 }
