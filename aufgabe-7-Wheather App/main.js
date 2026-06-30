@@ -47,11 +47,13 @@ async function ladeWetter(cityName) {
 
 function renderWetter(current, location){
     wetterDaten.innerHTML = "";
-    renderWetterZeile(`Stadt: ${location.name}`);
-    renderWetterZeile(`Temperatur: ${Math.round(current.temperature_2m)} °C`);
-    renderWetterZeile(`Luftfeuchtigkeit: ${current.relative_humidity_2m} %`);
-    renderWetterZeile(`Wind: ${current.wind_speed_10m} km/h`);
-
+    const wetterContainer = document.createElement("div");
+    wetterContainer.classList.add("weather-card");
+    renderWetterZeile(`Stadt: ${location.name}`, wetterContainer);
+    renderWetterZeile(`Temperatur: ${Math.round(current.temperature_2m)} °C`, wetterContainer);
+    renderWetterZeile(`Luftfeuchtigkeit: ${current.relative_humidity_2m} %`, wetterContainer);
+    renderWetterZeile(`Wind: ${current.wind_speed_10m} km/h`, wetterContainer);
+    wetterDaten.appendChild(wetterContainer);
 }
 
 function renderError (message){
@@ -62,10 +64,12 @@ function renderError (message){
 
 }
 
-function renderWetterZeile (text){
+function renderWetterZeile (text, wetterContainer){    
     const pElement = document.createElement("p");
     pElement.textContent = text;
-    wetterDaten.appendChild(pElement);
+    wetterContainer.appendChild(pElement);
+    
+
 
 }
 
