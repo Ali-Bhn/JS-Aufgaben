@@ -32,9 +32,10 @@ async function ladeWetter(cityName) {
         const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code`;
         const responseWetter = await fetch(weatherUrl);
         const dataWetter = await responseWetter.json();
-        console.log(dataWetter.current);
+        // console.log(dataWetter.current);
         const current = dataWetter.current;
         renderWetter(current, location);
+        
     }
     catch(error){
         console.error(error);
@@ -58,6 +59,13 @@ function renderWetter(current, location){
     iconElement.textContent = icon;
     wetterContainer.appendChild(iconElement);
 
+    const weatherDescription = document.createElement("div");
+    weatherDescription.classList.add("weather-description");
+    const description = getWeatherDescription(current.weather_code);
+    weatherDescription.textContent = description;
+    wetterContainer.appendChild(weatherDescription);
+
+    console.log(typeof current.weather_code)
     renderWetterZeile(`Stadt: ${location.name}`, wetterContainer);
     renderWetterZeile(`Temperatur: ${Math.round(current.temperature_2m)} °C`, wetterContainer);
     renderWetterZeile(`Luftfeuchtigkeit: ${current.relative_humidity_2m} %`, wetterContainer);
@@ -95,9 +103,78 @@ function starteSuche (){
 
 }
 function getWeatherIcon (weatherCode){
-    if (weatherCode === 61){
-        return "🌧️";
-    }else {
-        return "❓";
-    }
-};
+    switch(weatherCode){
+        case 0:
+            return "☀️";
+        case 1:
+            return "🌤️";
+        case 2:
+        case 3:
+            return "☁️";
+        case 45:
+        case 48:
+            return "🌫️";
+        case 51:
+        case 53:
+        case 55:
+            return "🌦️";
+        case 61:
+        case 63:
+        case 65:
+            return "🌧️";
+        case 71:
+        case 73:
+        case 75:
+        case 77:
+            return "❄️";
+        case 80:
+        case 81:
+        case 82:
+            return "🌦️";
+        case 95:
+        case 96:
+        case 99:
+            return "⛈️";
+        default:
+            return "❓";
+    };
+    console.log(typeof weatherCode)
+
+}
+ function getWeatherDescription(weatherCode){
+    switch(weatherCode){
+        case 0:
+            return "Klarer Himmel";
+        case 1:
+            return "Überwiegend klar";
+        case 2:
+        case 3:
+            return "Bewölkt";
+        case 45:
+        case 48:
+            return "Neblig";
+        case 51:
+        case 53:
+        case 55:
+            return "Leichter Nieselregen";
+        case 61:
+        case 63:
+        case 65:
+            return "Regen";
+        case 71:
+        case 73:
+        case 75:
+        case 77:
+            return "Schneefall";
+        case 80:
+        case 81:
+        case 82:
+            return "Regenschauer";
+        case 95:
+        case 96:
+        case 99:
+            return "Gewitter";
+        default:
+            return "Unbekannt";
+    };
+}
