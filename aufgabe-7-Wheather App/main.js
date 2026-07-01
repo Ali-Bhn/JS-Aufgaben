@@ -29,9 +29,10 @@ async function ladeWetter(cityName) {
         }
         const location = dataLocation.results[0];
         
-        const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m`;
+        const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code`;
         const responseWetter = await fetch(weatherUrl);
         const dataWetter = await responseWetter.json();
+        console.log(dataWetter.current);
         const current = dataWetter.current;
         renderWetter(current, location);
     }
@@ -47,10 +48,18 @@ async function ladeWetter(cityName) {
 
 function renderWetter(current, location){
     wetterDaten.innerHTML = "";
+    
+
     const wetterContainer = document.createElement("div");
     wetterContainer.classList.add("weather-card");
-    renderWetterZeile(`📍Stadt: ${location.name}`, wetterContainer);
-    renderWetterZeile(`🌡️Temperatur: ${Math.round(current.temperature_2m)} °C`, wetterContainer);
+    const iconElement = document.createElement("div");
+    iconElement.classList.add("weather-icon");
+    const icon = getWeatherIcon(current.weather_code);
+    iconElement.textContent = icon;
+    wetterContainer.appendChild(iconElement);
+
+    renderWetterZeile(`Stadt: ${location.name}`, wetterContainer);
+    renderWetterZeile(`Temperatur: ${Math.round(current.temperature_2m)} °C`, wetterContainer);
     renderWetterZeile(`Luftfeuchtigkeit: ${current.relative_humidity_2m} %`, wetterContainer);
     renderWetterZeile(`Wind: ${current.wind_speed_10m} km/h`, wetterContainer);
     wetterDaten.appendChild(wetterContainer);
@@ -85,3 +94,10 @@ function starteSuche (){
     ladeWetter(cityName);
 
 }
+function getWeatherIcon (weatherCode){
+    if (weatherCode === 61){
+        return "🌧️";
+    }else {
+        return "❓";
+    }
+};

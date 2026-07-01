@@ -26,12 +26,15 @@ main {
     justify-content: center;
 }
 section{
-    width:min(420px, 90%);
+    width: 90%;
+    max-width: 420px;
+    height: min(420px, 90%);
     color: white;
+
     
     padding: 2rem;
     border-radius: 1rem;
-    box-shadow: 2px 20px 30px  rgba(116, 164, 186, 0.16) ;
+    box-shadow: 2px 20px 30px  rgba(139, 152, 158, 0.16) ;
 }
 /* ============================================================================= */
 /* ==============================Such-Bereich=================================== */
@@ -73,7 +76,8 @@ section{
     max-width: 320px;
     padding: 1.25rem;
     display: flex;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     flex-direction: column;
     margin: 1.5rem auto 0;
     border-radius: 1.5rem;
@@ -89,4 +93,8 @@ section{
 }
 .weather-card:hover{
     transform: translateY(3px);
+}
+
+.weather-icon {
+    font-size: 4rem;
 }
