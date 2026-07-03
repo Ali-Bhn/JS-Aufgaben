@@ -32,8 +32,9 @@ async function ladeWetter(cityName) {
         const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code`;
         const responseWetter = await fetch(weatherUrl);
         const dataWetter = await responseWetter.json();
-        // console.log(dataWetter.current);
         const current = dataWetter.current;
+        
+
         renderWetter(current, location);
         
     }
@@ -53,11 +54,29 @@ function renderWetter(current, location){
 
     const wetterContainer = document.createElement("div");
     wetterContainer.classList.add("weather-card");
+    const topRow = document.createElement("div");
+    topRow.classList.add("top-row");
+    wetterContainer.appendChild(topRow);
+
     const iconElement = document.createElement("div");
     iconElement.classList.add("weather-icon");
     const icon = getWeatherIcon(current.weather_code);
     iconElement.textContent = icon;
-    wetterContainer.appendChild(iconElement);
+
+    const tempElemnt = document.createElement("div");
+    tempElemnt.classList.add("temp-element");
+
+    const detailsBox = document.createElement("div");
+    detailsBox.classList.add("details-box");
+
+    const cityElement = document.createElement("div");
+    cityElement.classList.add("city-element");
+    
+    topRow.appendChild(iconElement);
+    topRow.appendChild(tempElemnt);
+    topRow.appendChild(detailsBox);
+    topRow.appendChild(cityElement);
+
 
     const weatherDescription = document.createElement("div");
     weatherDescription.classList.add("weather-description");
@@ -65,11 +84,18 @@ function renderWetter(current, location){
     weatherDescription.textContent = description;
     wetterContainer.appendChild(weatherDescription);
 
-    console.log(typeof current.weather_code)
-    renderWetterZeile(`Stadt: ${location.name}`, wetterContainer);
-    renderWetterZeile(`Temperatur: ${Math.round(current.temperature_2m)} °C`, wetterContainer);
-    renderWetterZeile(`Luftfeuchtigkeit: ${current.relative_humidity_2m} %`, wetterContainer);
-    renderWetterZeile(`Wind: ${current.wind_speed_10m} km/h`, wetterContainer);
+    const datum = new Date(current.time);
+        const formatiertesDatum = datum.toLocaleDateString("de-DE", {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+            });
+    renderWetterZeile(`${location.name}`, cityElement);
+    renderWetterZeile(`${formatiertesDatum}`, cityElement);
+    renderWetterZeile(`${Math.round(current.temperature_2m)} °C`, tempElemnt);
+    renderWetterZeile(`Luftfeuchtigkeit: ${current.relative_humidity_2m} %`, detailsBox);
+    renderWetterZeile(`Wind: ${current.wind_speed_10m} km/h`, detailsBox);
     wetterDaten.appendChild(wetterContainer);
 }
 

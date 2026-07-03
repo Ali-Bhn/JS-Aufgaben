@@ -6,7 +6,7 @@
 body{
     display: flex;
     justify-content: center;
-    align-items: center;
+
     min-height: 100vh;
     margin: 0;
     padding: 0;
@@ -29,14 +29,13 @@ main {
     justify-content: center;
 }
 section{
-    width: 90%;
-    max-width: 420px;
-    height: min(420px, 90%);
+    width: 100%;
+    height:420px;
     color: white;
-
-    
+        background:
+        radial-gradient(circle at top left, rgba(175, 215, 234, 0.16), transparent 26rem) ,
+        linear-gradient(135deg, #133237 0%, #1c497b 48%, #122c4d 100%);
     padding: 2rem;
-    border-radius: 1rem;
     box-shadow: 2px 20px 30px  rgba(139, 152, 158, 0.16) ;
 }
 /* ============================================================================= */
@@ -69,14 +68,13 @@ section{
 
 }
 #cityInput{
-    width: min(240px, 100%);
+    width: min(400px, 100%);
     padding: 0.5rem;
     border-radius: 8px;
     border: none;
 }
 .weather-card{
     width: 100%;
-    max-width: 320px;
     padding: 1.25rem;
     display: flex;
     justify-content: flex-start;
@@ -96,15 +94,35 @@ section{
 
     
 }
+.top-row{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    width: 90%;
+    gap: 2rem;
+}
 .weather-card:hover{
     transform: translateY(3px);
 }
 
 .weather-icon {
     align-self: center;
-    font-size: 4rem;
+    font-size: 5rem;
 }
 .weather-description{
-    align-self: center;
+    font-size: 2rem;
+    align-self: flex-start;
     font-weight: 700;
+    letter-spacing: 2;
+}
+.temp-element{
+    font-size: 2rem;
+    align-self: center;
+}
+.city-element{
+    margin-left: auto; 
+    display: flex; 
+    flex-direction: column;
+    font-size: 2rem;
+
 }
