@@ -1,9 +1,21 @@
 const inputBox = document.getElementById("input-box");
 const listContainer = document.getElementById("list-container");
+const errorMsg = document.getElementById("error-msg");
+
+
+inputBox.addEventListener("keydown", (e) => {
+    if(e.key === "Enter"){
+        AddTask();
+    }
+})
+inputBox.addEventListener("input", () => {
+    errorMsg.classList.remove("show");    
+})
 
 function AddTask (){
-    if (inputBox.value === ''){
-        alert("Du musst heir etwas schreiben!");
+    if (inputBox.value.trim() === ''){
+        errorMsg.classList.add("show");
+
     }else{
         let li = document.createElement("li");
         li.innerHTML = inputBox.value;
