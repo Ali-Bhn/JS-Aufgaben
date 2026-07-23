@@ -1,0 +1,95 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: sans-serif;
+  background: #f0f9f4;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.app-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  max-height: 90vh;
+  overflow-y: auto;
+  h1 {
+    color: #2ecc71;
+    margin-bottom: 20px;
+  }
+}
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #2ecc71;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background-color: #56d97f;
+  transform: translateY(-1px);
+}
+button:active {
+  transform: translateY(0);
+}
+
+#bookmark-list {
+  list-style: none;
+  padding: 0;
+  li {
+    background-color: #faf5f5;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+#bookmark-list a {
+  color: #2ecc71;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 70%;
+  flex-shrink: 1;
+
+  text-decoration: none;
+}
+
+.remove-btn {
+  background-color: #e74c3c;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.remove-btn:hover {
+  background-color: #c0392b;
+}
